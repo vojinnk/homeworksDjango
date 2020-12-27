@@ -2,6 +2,7 @@
 
 '''
 import json
+from os import path
 
 class Vehicle:
     def __init__(self,manufacturer,model,yearOfProduction):
@@ -81,6 +82,9 @@ def dodajDio():
     ime = input("Unesite ime dijela: ")
     brojDijela = input("Unesite serijski broj dijela: ")
     cijena = float(input("Unesite cijenu dijeal: "))
+    
+
+
     if type(vozilo)==Car:
         x={
             "ImeDijela":ime,
@@ -94,9 +98,15 @@ def dodajDio():
                 "Tip":vozilo.type
             }
         }
-        with open("autoDijelovi.json","a") as fileJ:
-            json.dump(x,fileJ,indent=4)
-    
+        if path.exists("AutoDijelovi.json"):
+            with open("AutoDijelovi.json","r") as f:
+                data = json.load(f)
+                data.append(x)
+        else:
+            data=[]
+            data.append(x)
+        with open("AutoDijelovi.json","w") as f:
+            json.dump(data,f,indent=4)
     elif type(vozilo)==Truck:
         x={
             "ImeDijela":ime,
@@ -109,8 +119,17 @@ def dodajDio():
                 "Nosivost":vozilo.loadWeight,
             }
         }
-        with open("kamionDijelovi.json","a") as fileJ:
-            json.dump(x,fileJ,indent=4)
+        if path.exists("KamionDijelovi.json"):
+            with open("KamionDijelovi.json","r") as f:
+                data = json.load(f)
+                data.append(x)
+        else:
+            data=[]
+            data.append(x)
+        with open("KamionDijelovi.json","w") as f:
+            json.dump(data,f,indent=4)
+        
+        
     
     elif type(vozilo)==Bus:
         x={
@@ -124,16 +143,31 @@ def dodajDio():
                 "BrojSjedista":vozilo.numberOfSeats
             }
         }
-        with open("busDijelovi","a") as fileJ:
-            
-"""    
+
+        if path.exists("BusDijelovi.json"):
+            with open("BusDijelovi.json","r") as f:
+                data = json.load(f)
+                data.append(x)
+        else:
+            data=[]
+            data.append(x)
+        with open("BusDijelovi.json","w") as f:
+            json.dump(data,f,indent=4)
+
 def pretraziDjelove():
-    with open("autoDijelovi.json","r") as f:
-        podaci = json.load(f)
+    print("Za koju kategoriju trazite dijelove:\n")
+    kategorija = int(input("1)Automobil\n2)Kamion\n3)Autobus\n"))
+    if kategorija==1:
+        putanja="AutoDijelovi.json"
+    elif kategorija==2:
+        putanja="KamionDijelovi.json"
+    elif kategorija==3:
+        putanja="BusDijelovi.json"
     
-    print(podaci[1])        
-"""
-    
+
+    #with open(putanja,"r") as f:
+     #   podaci = json.load(f)
+           
 
 action=0
 while action!=-1:
@@ -144,7 +178,7 @@ while action!=-1:
         #print(action)
     elif action==2:
         pretraziDjelove()
-        print(action)
+       # print(action)
     elif action==3:
         #izlistajDjelove()
         print(action)
