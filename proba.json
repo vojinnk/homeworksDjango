@@ -1,0 +1,12 @@
+{
+    "ImeDijela": "dsfg",
+    "SerijskiBroj": "dafs",
+    "Cijena": 22.0,
+    "Vozilo": {
+        "Proizvodjac": "aud",
+        "Model": "2",
+        "GodinaProizvodnje": "22",
+        "BrojVrata": 1,
+        "Tip": "scf"
+    }
+}

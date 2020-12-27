@@ -1,6 +1,8 @@
 '''
 
 '''
+import json
+
 class Vehicle:
     def __init__(self,manufacturer,model,yearOfProduction):
         self.manufacturer=manufacturer
@@ -24,12 +26,13 @@ class Car(Vehicle):
            return True
         else:
             return False 
-    
+
 
 class Truck(Vehicle):
     def __init__(self,manufacturer,model,yearOfProduction,loadWeight):
         super().__init__(manufacturer,model,yearOfProduction)
         self.loadWeight = loadWeight
+
 
 class Bus(Vehicle):
     def __init__(self,manufacturer,model,yearOfProduction,numberOfSeats):
@@ -45,10 +48,115 @@ class Part:
     def __repr__(self):
         return str(self.name) + " (" + str(self.vehicle) + ")-"+str(self.price)
 
-auto = Car("Audi","A6",2016,5,"limo")
+#auto = Car("Audi","A6",2016,5,"limo")
+#print(type(auto)==Car)
+#auto2 = Car("Audi","A",2016,5,"limo")
+#print(auto==auto2)
+def kreirajVozilo():
 
-auto2 = Car("Audi","A",2016,5,"limo")
+    opcija = int(input("1)Automobil\n2)Kamion\n3)Autobus:\n"))
 
+    proizvodjac=input("Unesite proizvodjaca: ")
+    model=input("Unesite model: ")
+    godinaProizvodnje=input("Unesite godinu proizvodnje vozila: ")
+    print("Koja kategorija vozila je u pitanju:")
 
+    if opcija==1:
+        brojVrata=int(input("Unesite broj vrata automobila: "))
+        tip=input("Unesite tip automobila: ")
+        vozilo=Car(proizvodjac,model,godinaProizvodnje,brojVrata,tip)
+    elif opcija==2:
+        maksNosivost=int(input("Unesite maksimalnu nosivost kamion u kg: "))
+        vozilo = Truck(proizvodjac,model,godinaProizvodnje,maksNosivost)
+    elif opcija==3:
+        brojSjedista=int(input("Unesite broj sjedista autobusa: "))
+        vozilo = Bus(proizvodjac,model,godinaProizvodnje,brojSjedista)
+   
+    return vozilo  
 
-print(auto==auto2)
+def dodajDio():
+    print("Unesite podatke o vozilu za koji je ovaj dio!")
+    vozilo = kreirajVozilo()
+      
+    ime = input("Unesite ime dijela: ")
+    brojDijela = input("Unesite serijski broj dijela: ")
+    cijena = float(input("Unesite cijenu dijeal: "))
+    if type(vozilo)==Car:
+        x={
+            "ImeDijela":ime,
+            "SerijskiBroj":brojDijela,
+            "Cijena":cijena,
+            "Vozilo":{
+                "Proizvodjac":vozilo.manufacturer,
+                "Model":vozilo.model,
+                "GodinaProizvodnje":vozilo.yearOfProduction,
+                "BrojVrata":vozilo.numberOfDoors,
+                "Tip":vozilo.type
+            }
+        }
+        with open("autoDijelovi.json","a") as fileJ:
+            json.dump(x,fileJ,indent=4)
+    
+    elif type(vozilo)==Truck:
+        x={
+            "ImeDijela":ime,
+            "SerijskiBroj":brojDijela,
+            "Cijena":cijena,
+            "Vozilo":{
+                "Proizvodjac":vozilo.manufacturer,
+                "Model":vozilo.model,
+                "GodinaProizvodnje":vozilo.yearOfProduction,
+                "Nosivost":vozilo.loadWeight,
+            }
+        }
+        with open("kamionDijelovi.json","a") as fileJ:
+            json.dump(x,fileJ,indent=4)
+    
+    elif type(vozilo)==Bus:
+        x={
+            "ImeDijela":ime,
+            "SerijskiBroj":brojDijela,
+            "Cijena":cijena,
+            "Vozilo":{
+                "Proizvodjac":vozilo.manufacturer,
+                "Model":vozilo.model,
+                "GodinaProizvodnje":vozilo.yearOfProduction,
+                "BrojSjedista":vozilo.numberOfSeats
+            }
+        }
+        with open("busDijelovi","a") as fileJ:
+            
+"""    
+def pretraziDjelove():
+    with open("autoDijelovi.json","r") as f:
+        podaci = json.load(f)
+    
+    print(podaci[1])        
+"""
+    
+
+action=0
+while action!=-1:
+    print("Meni:\n1:Dodaj dio\n2:Pretrazi djelove\n3:Pregledaj sve djelove za vozilo!\n-1:Kraj")
+    action=int(input("Unesite broj akcije koju zelite da izvrsite: "))
+    if action==1:
+        dodajDio()
+        #print(action)
+    elif action==2:
+        pretraziDjelove()
+        print(action)
+    elif action==3:
+        #izlistajDjelove()
+        print(action)
+    elif action==-1:
+        break
+    else:
+        print("Pogresan unos!!")
+    provjera = int(input("Da li zelite da izvrsite jos neku akciju?\nUnesite 1 za jos akcija, a 2 za kraj rada "))
+    print("Provjera: " + str(provjera))
+    if provjera==1:
+        action=0
+    elif provjera==2:
+        action=-1
+
+print("Kraj rada!!!")
