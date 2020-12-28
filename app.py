@@ -49,9 +49,9 @@ class Part:
     def __repr__(self):
         return str(self.name) + " (" + str(self.vehicle) + ")-"+str(self.price)
 
-#auto = Car("Audi","A6",2016,5,"limo")
+#auto = Vehicle("Audi","A6",2016)
 #print(type(auto)==Car)
-#auto2 = Car("Audi","A",2016,5,"limo")
+#auto2 = Vehicle("Audi","A6",2016)
 #print(auto==auto2)
 def kreirajVozilo():
 
@@ -81,7 +81,7 @@ def dodajDio():
       
     ime = input("Unesite ime dijela: ")
     brojDijela = input("Unesite serijski broj dijela: ")
-    cijena = float(input("Unesite cijenu dijeal: "))
+    cijena = float(input("Unesite cijenu dijela: "))
     
 
 
@@ -164,14 +164,38 @@ def pretraziDjelove():
     elif kategorija==3:
         putanja="BusDijelovi.json"
     
+    proizvodjac=input("Unesite proizvodjaca vozila: ")
+    model=input("model: ")
+    godina=int(input("godinu proizvodnje: "))
+    vozilo=Vehicle(proizvodjac,model,godina)
+    print(vozilo)
+    with open(putanja,"r") as f:
+        podaci = json.load(f)    
+    for elem in podaci:
+        temp = Vehicle(elem["Vozilo"]["Proizvodjac"],elem["Vozilo"]["Model"],int(elem["Vozilo"]["GodinaProizvodnje"]))
+        if vozilo==temp:
+            print(elem["ImeDijela"]+" "+str(elem["Cijena"])+"$")
 
-    #with open(putanja,"r") as f:
-     #   podaci = json.load(f)
-           
+def izlistajDjelove():
+    print("Za koju kategoriju trazite dijelove:\n")
+    kategorija = int(input("1)Automobil\n2)Kamion\n3)Autobus\n"))
+    if kategorija==1:
+        putanja="AutoDijelovi.json"
+    elif kategorija==2:
+        putanja="KamionDijelovi.json"
+    elif kategorija==3:
+        putanja="BusDijelovi.json"
+
+    with open(putanja,"r") as f:
+        podaci = json.load(f)    
+    for elem in podaci:
+        print(elem["Vozilo"]["Proizvodjac"]+" "+elem["Vozilo"]["Model"]+"("+str(elem["Vozilo"]["GodinaProizvodnje"])+")-"+elem["ImeDijela"]+" "+str(elem["Cijena"])+"$")
+
+    
 
 action=0
 while action!=-1:
-    print("Meni:\n1:Dodaj dio\n2:Pretrazi djelove\n3:Pregledaj sve djelove za vozilo!\n-1:Kraj")
+    print("Meni:\n1:Dodaj dio\n2:Pretrazi djelove\n3:Pregledaj sve djelove!\n-1:Kraj")
     action=int(input("Unesite broj akcije koju zelite da izvrsite: "))
     if action==1:
         dodajDio()
@@ -180,8 +204,8 @@ while action!=-1:
         pretraziDjelove()
        # print(action)
     elif action==3:
-        #izlistajDjelove()
-        print(action)
+        izlistajDjelove()
+        #print(action)
     elif action==-1:
         break
     else:

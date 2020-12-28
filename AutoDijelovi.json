@@ -1,26 +1,26 @@
 [
     {
         "ImeDijela": "far",
-        "SerijskiBroj": "wq4rnjw",
-        "Cijena": 200.0,
+        "SerijskiBroj": "12234HDHA",
+        "Cijena": 550.6,
         "Vozilo": {
             "Proizvodjac": "mercedes",
-            "Model": "c ",
-            "GodinaProizvodnje": "2011",
-            "BrojVrata": 3,
-            "Tip": "kupe"
+            "Model": "c class",
+            "GodinaProizvodnje": "2016",
+            "BrojVrata": 5,
+            "Tip": "limo"
         }
     },
     {
         "ImeDijela": "branik",
-        "SerijskiBroj": "15fdgfrfds",
-        "Cijena": 155.75,
+        "SerijskiBroj": "150",
+        "Cijena": 15.0,
         "Vozilo": {
             "Proizvodjac": "audi",
-            "Model": "a5",
+            "Model": "a6",
             "GodinaProizvodnje": "2015",
             "BrojVrata": 5,
-            "Tip": "kupe"
+            "Tip": "limo"
         }
     }
 ]
